@@ -1,0 +1,6 @@
+# //TODO
+* Add 'showLocation' option that draws the geolocation to the map once it is found (and incorporate the 'accuracy' parameter).
+* Provide success and failure callback options for the api.
+
+
+## Done
