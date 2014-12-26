@@ -35,5 +35,15 @@
 }
 
 .leaflet-touch .leaflet-control-geolocate a {
-  background-position: 2px 2px;
+    box-shadow: none;
+    border: 2px solid rgba(0,0,0,0.2);
+    background-clip: padding-box;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), 
+only screen and (min-device-pixel-ratio: 2) {
+    .leaflet-control-geolocate a {
+      background-image: url(geolocate@2x.png);
+      background-size: 104px 26px;
+    }
 }

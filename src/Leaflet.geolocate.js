@@ -21,7 +21,7 @@ L.Control.Geolocate = L.Control.extend({
         L.DomEvent.stopPropagation(e);
         L.DomEvent.preventDefault(e);
         this._addFlash();
-        this._map.geolocate((this._successCallback).bind(this));
+        this._map.geolocate((this._successHandler).bind(this));
     },
 
     _addFlash: function () {
@@ -38,7 +38,7 @@ L.Control.Geolocate = L.Control.extend({
         L.DomUtil.addClass(this.link, 'blue');
     },
 
-    _successCallback: function () {
+    _successHandler: function () {
         this._removeFlash();
         if (this._map.options.drawGeolocation){
             this._addBlue();
@@ -55,7 +55,8 @@ L.Control.Geolocate = L.Control.extend({
         this._geomarker = L.marker([position.coords.latitude, position.coords.longitude],{
             icon: L.icon({
                 iconUrl: 'dist/geolocation-marker.png',
-                iconRetinaUrl: 'dist/geolocation-marker@2x.png'
+                iconRetinaUrl: 'dist/geolocation-marker@2x.png',
+                iconSize: [26, 26]
             }),
             clickable: false,
             title: 'Your location.',
@@ -66,24 +67,30 @@ L.Control.Geolocate = L.Control.extend({
 });
 
 L.Map.include({
-    geolocate: function (callback) {
-        callback = typeof callback !== 'undefined' ? callback : function() {};
+    geolocate: function (successHandler, failureHandler) {
+        successHandler = typeof successHandler !== 'undefined' ? successHandler : function() {};
+        failureHandler = typeof failureHandler !== 'undefined' ? failureHandler : function() {};
+
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((function(position) {
+            navigator.geolocation.getCurrentPosition(
 
-                // centre the map on the users locations
-                this.setView([position.coords.latitude, position.coords.longitude], 17);
+                // success callback
+                ( function(position) {
+                    // centre the map on the users locations
+                    this.setView([position.coords.latitude, position.coords.longitude], 17);
 
-                // draw the marker if the option is set
-                if (this.options.drawGeolocation) {
-                    this.geolocateControl.drawGeoMarker(position);
-                }
+                    // draw the marker if the option is set
+                    if (this.options.drawGeolocation) {
+                        this.geolocateControl.drawGeoMarker(position);
+                    }
+                    successHandler();}
+                ).bind(this),
 
-                callback();
-            }).bind(this));
-        } else {
-            alert('Location information not available or allowed.');
-            callback();
+                // failure callback
+                function () {
+                    alert('Location information not available or allowed.');
+                    failureHandler();
+                });
         }
     }
 });
