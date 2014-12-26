@@ -16,7 +16,7 @@ var map = new L.Map('map', {
 ### API
 
 ``` js
-map.geolocate(callback) // attempt to centre the map on users coordanates and then call the callback
+map.geolocate(successCallback, failureCallback) // attempt to centre the map on users coordanates and then call the relevant handler
 ```
 
 ### Building / Development
