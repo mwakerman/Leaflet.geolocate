@@ -22,6 +22,10 @@
     animation-name: pulse; 
 }
 
+.blue {
+    background-position: -78px 0 !important;
+}
+
 .leaflet-control-geolocate a {
   background:#fff url(geolocate.png) no-repeat 0 0;
 }

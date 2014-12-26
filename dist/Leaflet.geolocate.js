@@ -34,31 +34,63 @@ L.Control.Geolocate = L.Control.extend({
         L.DomUtil.removeClass(this.link, 'pulse');
     },
 
+    _addBlue: function () {
+        L.DomUtil.addClass(this.link, 'blue');
+    },
+
     _successCallback: function () {
         this._removeFlash();
+        if (this._map.options.drawGeolocation){
+            this._addBlue();
+        }
+    },
+
+    drawGeoMarker: function(position) {
+        // remote previous geomarker if it exists
+        if (typeof this._geomarker !== 'undefined') {
+            this._map.removeLayer(this._geomarker);
+        }
+        
+        // create and add new geomarker
+        this._geomarker = L.marker([position.coords.latitude, position.coords.longitude],{
+            icon: L.icon({
+                iconUrl: 'dist/geolocation-marker.png',
+                iconRetinaUrl: 'dist/geolocation-marker@2x.png'
+            }),
+            clickable: false,
+            title: 'Your location.',
+        });
+
+        this._geomarker.addTo(this._map);
     }
 });
 
 L.Map.include({
     geolocate: function (callback) {
+        callback = typeof callback !== 'undefined' ? callback : function() {};
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((function(position) {
+
+                // centre the map on the users locations
                 this.setView([position.coords.latitude, position.coords.longitude], 17);
-                if (typeof callback !== 'undefined') {
-                    callback();
+
+                // draw the marker if the option is set
+                if (this.options.drawGeolocation) {
+                    this.geolocateControl.drawGeoMarker(position);
                 }
+
+                callback();
             }).bind(this));
         } else {
-            if (typeof callback !== 'undefined') {
-                callback();
-            }
+            alert('Location information not available or allowed.');
+            callback();
         }
     }
 });
 
 L.Map.mergeOptions({
     geolocateControl: false,
-    drawGeolocation: false
+    drawGeolocation: true
 });
 
 L.Map.addInitHook(function () {

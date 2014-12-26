@@ -8,7 +8,8 @@ A geolocation plugin for Leaflet.
 
 ``` js
 var map = new L.Map('map', {
-    geolocateControl: true
+    geolocateControl: true,
+    drawGeolocation: true, // draws the geo location marker when location is found
 });
 ```
 

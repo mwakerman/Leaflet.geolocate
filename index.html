@@ -26,7 +26,8 @@
   </div>
 <script>
   var map = L.map('map', {
-    geolocateControl: true
+    geolocateControl: true,
+    drawGeolocation: true
   }).setView([-23.7, 133.9], 3);
 
   L.tileLayer('http://{s}.tiles.mapbox.com/v4/examples.map-i86l3621/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZXhhbXBsZXMiLCJhIjoiOTZQTkFkcyJ9.0DKk_5HaToBWqNOJqCwB-g', {
