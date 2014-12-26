@@ -27,3 +27,5 @@ without needing to execute make on every change.
 
 ### Thanks
 This project was modelled __heavily__ on the [Leaflet.fullscreen](https://github.com/Leaflet/Leaflet.fullscreen) plugin written by [John Firebaugh](https://github.com/jfirebaugh).
+
+The icon design and lifecycle was based on the Google Maps geolocation feature.

@@ -21,7 +21,7 @@ L.Control.Geolocate = L.Control.extend({
         L.DomEvent.stopPropagation(e);
         L.DomEvent.preventDefault(e);
         this._addFlash();
-        this._map.geolocate((this._removeFlash).bind(this));
+        this._map.geolocate((this._successCallback).bind(this));
     },
 
     _addFlash: function () {
@@ -32,6 +32,10 @@ L.Control.Geolocate = L.Control.extend({
     _removeFlash: function () {
         L.DomUtil.removeClass(this.link, 'animated');
         L.DomUtil.removeClass(this.link, 'pulse');
+    },
+
+    _successCallback: function () {
+        this._removeFlash();
     }
 });
 
@@ -39,7 +43,7 @@ L.Map.include({
     geolocate: function (callback) {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((function(position) {
-                this.setView([position.coords.latitude, position.coords.longitude], 15);
+                this.setView([position.coords.latitude, position.coords.longitude], 17);
                 if (typeof callback !== 'undefined') {
                     callback();
                 }
@@ -54,6 +58,7 @@ L.Map.include({
 
 L.Map.mergeOptions({
     geolocateControl: false,
+    drawGeolocation: false
 });
 
 L.Map.addInitHook(function () {
