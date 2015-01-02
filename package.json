@@ -1,0 +1,28 @@
+{
+  "name": "leaflet-geolocate",
+  "version": "0.0.3",
+  "description": "A geolocation control for Leaflet",
+  "main": "src/Leaflet.geolocate.js",
+  "scripts": {
+    "test": "jshint dist/leaflet.geolocate.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mapbox/Leaflet.fullscreen.git"
+  },
+  "keywords": [
+    "leaflet",
+    "maps",
+    "geolocate",
+    "geolocation",
+    "client"
+  ],
+  "devDependencies": {
+    "uglify-js": "2.4.3",
+    "jshint": "2.3.0"
+  },
+  "author": "Misha Wakerman",
+  "license": "BSD",
+  "gitHead": "",
+  "readmeFilename": "README.md"
+}
